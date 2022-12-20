@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!-- {% load static %} -->
+{% block body_block %}
+
+<!-- ======= Hero Section ======= -->
+{% if user.is_authenticated %}
+<section id="profile" class="d-flex flex-column justify-content-center ">
+  <div class="container  text-md-center" data-aos="fade-up">
+<!--    <h3>Ласкаво просимо, {{user.get_full_name}}</h3>-->
+<!--    <p>{{user.get_email}}</p>-->
+    <h2>Алгоритм вибору спрямування</h2>
+    <img src='{% static "selected_direction_2.png" %}'>
+
+  </div>
+</section><!-- End Hero -->
+
+{% else %}
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+  <div class="container text-center text-md-left" data-aos="fade-up">
+    <h1>Ласкаво просимо</h1>
+    <h2>Побудуйте разом з нами ефективну траєкторію вашого навчання із врахуванням розвитку всіх ваших здібностей і досягнення високих результатів :)</h2>
+    <a href="{% url 'login'%}" class="btn-get-started scrollto">Поїхали!</a>
+  </div>
+</section><!-- End Hero -->
+{% endif %}
+<!--<main id="main">-->
+
+<!--  &lt;!&ndash; ======= Steps Section ======= &ndash;&gt;-->
+<!--  <section id="faculties" class="steps section-bg">-->
+<!--    <div class="container">-->
+
+<!--      <div class="row no-gutters">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--</main>>
+
+{% endblock %}
