@@ -137,12 +137,16 @@ class Student(models.Model):
 #категорія
 class Category_Subject(models.Model):
     name=models.CharField(max_length=30)
+    slug = models.SlugField(max_length=100, db_index=True)
 
     class Meta:
         ordering = ["name"]
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("indplan:ind_plan_student_edit_by_category", args={self.slug})
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)

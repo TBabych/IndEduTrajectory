@@ -1,10 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+<!-- {% load static %} -->
+{% block title %}
+Індивідуальна траєкторія здобувача
+{% endblock %}
+{% block body_block %}
+<div class="row mt-2">
+    <div class="col-md-3 text-center ">
+        <h5>Категорії дисциплін:</h5>
+    </div>
+    <div class="col-md-9 text-center">
+ {% if not category_subject %}
+                   <h5>
+                        Вcі дисципліни
+                    </h5>
+                    {% else %}
+                    <h5>Дисципліни: {{category_subject.name}}</h5>
+                    {% endif %}
 
-</body>
-</html>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-md-3">
+        <ul class="list-group">
+            <li {% if not category_subject %} class="list-group-item selected font-weight-bold text-uppercase" {% else%}
+                class="list-group-item text-uppercase" {% endif %}>
+                <a href="{% url 'indplan:ind_plan_student_edit' %}">Всі</a>
+            </li>
+            {% for cat in categories_subjects %}
+            <li {% if not category_subject %} class="list-group-item selected font-weight-bold text-uppercase" {% else%}
+                class="list-group-item text-uppercase" {% endif %}>
+                <a href="{{cat.get_absolute_url}}">{{cat.name}}</a>
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="container">
+            <div class="row m-2 flex justify-content-center">
+                <!--<div class="col-12">-->
+                <table id="student_indplan" class="table table-success">
+
+
+                    <thead>
+                    <tr>
+                        <th scope="col">Код</th>
+                        <th scope="col">Кафедра</th>
+                        <th scope="col">Назва дисципліни</th>
+                        <th scope="col">Кредити</th>
+                        <th scope="col">Семестр</th>
+                        <th scope="col">Напрям</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for subject in main_subjects %}
+                    <tr>
+                        <th scope="row">{{subject.code_subject}}</th>
+                        <td>{{subject.mainsubject.departmentId}}</td>
+                        <td>{{subject.mainsubject.name}}</td>
+                        <td>{{subject.mainsubject.credit}}</td>
+                        <td>{{subject.semestr}}</td>
+                        <td>{{subject.mainsubject.direction}}</td>
+                    </tr>
+                    {% endfor %}
+                    <!--  <tr>-->
+                    <!--      <td rowspan="4">Вибіркові компоненти (Вибір з двох)</td>-->
+                    <!--  </tr>-->
+                    <!--  {% for subject in selective_subjects %}-->
+                    <!--   <tr>-->
+                    <!--      <th scope="row">{{subject.code_subject}}</th>-->
+                    <!--       <td>{{subject.mainsubject.departmentId}}</td>-->
+                    <!--       <td>{{subject.mainsubject.name}}</td>-->
+                    <!--       <td>{{subject.mainsubject.credit}}</td>-->
+                    <!--       <td>{{subject.semestr}}</td>-->
+                    <!--       <td>{{subject.mainsubject.direction}}</td>-->
+                    <!--  <td>{{subject.mainsubject.category}}</td>-->
+                    <!--   </tr>-->
+                    <!--  {% endfor %}-->
+                    <tr>
+                        <th class="head_component" colspan="7">Вибіркові компоненти</th>
+                    </tr>
+                    {% for subject in ip_student %}
+
+                    <tr>
+                        <th scope="row">{{subject.code_subject}}</th>
+                        <td>{{subject.subject.departmentId}}</td>
+                        <td>{{subject.subject.name}}</td>
+                        <td>{{subject.subject.credit}}</td>
+                        <td>{{subject.semestr}}</td>
+                        <td>{{subject.subject.direction}}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
